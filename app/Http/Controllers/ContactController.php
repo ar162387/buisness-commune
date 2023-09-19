@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\NewContactRequest;
-use Illuminate\Http\Request;
-
 use App\Models\Company;
 use App\Models\Contact;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\NewContactRequest;
 
 class ContactController extends Controller
 {
@@ -14,7 +15,9 @@ class ContactController extends Controller
 
 
         // $data =[];
+        
         $companies = Company::orderBy('name')->pluck('name' , 'id');
+        DB::enableQueryLog();
         $contacts = Contact::latest()->where(function ($query)
         {
             if($companyId = request()->query('company_id')) {
@@ -30,6 +33,8 @@ class ContactController extends Controller
         }
 
         })->paginate(10);
+
+        dump(DB::getQueryLog());
 
         
 
