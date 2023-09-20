@@ -17,7 +17,7 @@ class ContactController extends Controller
         // $data =[];
         
         $companies = Company::orderBy('name')->pluck('name' , 'id');
-        DB::enableQueryLog();
+        //DB::enableQueryLog();
         $contacts = Contact::latest()->where(function ($query)
         {
             if($companyId = request()->query('company_id')) {
@@ -34,7 +34,7 @@ class ContactController extends Controller
 
         })->paginate(10);
 
-        dump(DB::getQueryLog());
+        //dump(DB::getQueryLog());
 
         
 
@@ -126,7 +126,24 @@ class ContactController extends Controller
         $contact = Contact::findOrFail($id);
         $contact->delete();
 
-        return redirect()->route('contacts.index')->with('message' , 'COntact has been deleted succesfully');
+        return redirect()->route('contacts.index')
+        ->with('message' , 'Contact has been moved to trash');
 
+    }
+    public function restore($id)
+    {
+        $contact = Contact::onlyTrashed()->findOrFail($id);
+        $contact->restore();
+        return back()
+            ->with('message', 'Contact has been restored from trash.')
+            ->with('undoRoute', route('contacts.restore', $contact->id));
+    }
+
+    public function forceDelete($id)
+    {
+        $contact = Contact::onlyTrashed()->findOrFail($id);
+        $contact->forceDelete();
+        return back()
+            ->with('message', 'Contact has been removed permanently.');
     }
 }

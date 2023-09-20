@@ -33,7 +33,8 @@ Route::post('/login' , [AuthController::class , 'login'])->name('login');
 // })->name('register');
 
 Route::resource('/contacts' , ContactController::class);
-
+Route::post('/contacts/{contact}/restore', [ContactController::class, 'restore'])->name('contacts.restore');
+Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])->name('contacts.force-delete');
 
 // Route::controller(ContactController::class)->group(function(){
 
