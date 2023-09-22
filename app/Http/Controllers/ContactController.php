@@ -63,9 +63,9 @@ class ContactController extends Controller
 
     
 
-    public function show($id) {
+    public function show(Contact $contact) {
         
-        $contact = Contact::findOrFail($id);
+        
 
     
 
@@ -73,16 +73,9 @@ class ContactController extends Controller
         return view("contacts.show" )->with('contact' , $contact);
         
     }
-    public function store(Request $request) {
+    public function store(NewContactRequest $request) {
 
-        $request->validate([
-            'first_name' => ['required' , 'string' , 'max:255'],
-            'last_name' => ['required' , 'string' , 'max:255'],
-            'email' => ['required' , 'email'],
-            'phone' => ['nullable'],
-            'address' => ['nullable'],
-            'company_id' => ['required' , 'exists:companies,id']
-        ]);
+       
 
         Contact::create($request->all());
 
@@ -90,18 +83,7 @@ class ContactController extends Controller
          return redirect()->route('contacts.index')->with('message' , 'Contact has been added successfully');
     }
 
-    public function update(Request  $request , $id) {
-
-        $contact = Contact::findOrFail($id);
-        
-        $request->validate([
-            'first_name' => ['required' , 'string' , 'max:255'],
-            'last_name' => ['required' , 'string' , 'max:255'],
-            'email' => ['required' , 'email'],
-            'phone' => ['nullable'],
-            'address' => ['nullable'],
-            'company_id' => ['required' , 'exists:companies,id']
-        ]);
+    public function update(NewContactRequest  $request , Contact $contact) {
 
         
         $contact->update($request->all());
@@ -109,9 +91,9 @@ class ContactController extends Controller
         
     }
 
-    function edit($id) {
+    function edit(Contact $contact) {
         $companies = Company::orderBy('name')->pluck('name' , 'id');
-        $contact = Contact::findOrFail($id);
+        
 
         return view('contacts.edit' , [
             'companies' => $companies,

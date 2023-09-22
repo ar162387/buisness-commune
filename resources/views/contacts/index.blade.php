@@ -61,7 +61,7 @@
                           {{$undoRoute = session('undoRoute')}}
                             <form action="{{ $undoRoute }}" method="POST" style="display: inline">
                               @csrf
-                              
+                              @method('delete')
                               <button class="btn alert-link">Undo</button>
                             </form>
                          

@@ -11,7 +11,7 @@ class NewContactRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,10 +24,10 @@ class NewContactRequest extends FormRequest
         return [
             'first_name' => ['required' , 'string' , 'max:255'],
             'last_name' => ['required' , 'string' , 'max:255'],
-            'email' => ['required' , 'max:255'],
+            'email' => ['required' , 'email'],
             'phone' => ['nullable'],
             'address' => ['nullable'],
-            'company_id' => ['required']
+            'company_id' => ['required' , 'exists:companies,id']
         ];
     }
 }
