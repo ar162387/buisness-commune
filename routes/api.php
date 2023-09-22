@@ -21,13 +21,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // public
 
-Route::post('/register' , [AuthController::class , 'register'])->name('register');
+
 
 
 
 //private
 
-Route::group(['middleware' => ['auth:sanctum']] , function() {
-    Route::post('/logout' , [AuthController::class , 'logout']);
-    });
+// Route::group(['middleware' => ['auth:sanctum']] , function() {
+//     Route::post('/logout' , [AuthController::class , 'logout']);
+//     });
 

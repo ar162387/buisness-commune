@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WelcomeController;
 
@@ -19,12 +19,12 @@ use App\Http\Controllers\WelcomeController;
 
 Route::get('/', WelcomeController::class);
 
-Route::get('/login' , function()
-{
-return view('auth.login');
-})->name('showlogin');
+// Route::get('/login' , function()
+// {
+// return view('auth.login');
+// })->name('showlogin');
 
-Route::post('/login' , [AuthController::class , 'login'])->name('login');
+// Route::post('/login' , [AuthController::class , 'login'])->name('login');
 
 
 // Route::get('/register' , function()
