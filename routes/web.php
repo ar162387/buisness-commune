@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +32,13 @@ Route::get('/', WelcomeController::class);
 // {
 // return view('register');
 // })->name('register');
-
-Route::resource('/contacts' , ContactController::class);
+Route::middleware(["auth"])->group(function(){
+    Route::get('/dashboard', DashboardController::class);
+    Route::resource('/contacts' , ContactController::class);
 Route::delete('/contacts/{contact}/restore', [ContactController::class, 'restore'])->withTrashed()->name('contacts.restore');
 Route::delete('/contacts/{contact}/force-delete', [ContactController::class, 'forceDelete'])->withTrashed()->name('contacts.force-delete');
+});
+
 
 // Route::controller(ContactController::class)->group(function(){
 
