@@ -36,6 +36,9 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.updatepassword');
             
         });
+        Fortify::VerifyEmailView(function(){
+            return view('auth.verifyemail');
+        });
         
     }
 

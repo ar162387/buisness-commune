@@ -32,7 +32,7 @@ Route::get('/', WelcomeController::class);
 // {
 // return view('register');
 // })->name('register');
-Route::middleware(["auth"])->group(function(){
+Route::middleware(["auth" , "verified"])->group(function(){
     Route::get('/dashboard', DashboardController::class);
     Route::resource('/contacts' , ContactController::class);
 Route::delete('/contacts/{contact}/restore', [ContactController::class, 'restore'])->withTrashed()->name('contacts.restore');
